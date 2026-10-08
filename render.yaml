@@ -1,12 +1,6 @@
-# Configuração do Render (Blueprint) 100% gratuita: site + banco Postgres grátis.
-# Limites do plano grátis: o site "dorme" após 15 min sem acesso (leva cerca de 1 min para acordar)
-# e o banco grátis expira 30 dias depois de criado. Veja o README.
-databases:
-  - name: balada-db
-    plan: free
-    databaseName: balada
-    user: balada
-
+# Configuração do Render (Blueprint) gratuita: só o site. O banco fica em outro serviço (Neon, Supabase...)
+# e você cola a URL dele em DATABASE_URL quando o Render pedir.
+# O site "dorme" após 15 min sem acesso (leva cerca de 1 min para acordar). Veja o README.
 services:
   - type: web
     name: balada-ejc
@@ -19,9 +13,7 @@ services:
       - key: NODE_VERSION
         value: "22"
       - key: DATABASE_URL
-        fromDatabase:
-          name: balada-db
-          property: connectionString
+        sync: false
       - key: VAGAS
         value: "120"
       # Os valores abaixo o Render pede para você preencher na criação (não ficam no GitHub).
