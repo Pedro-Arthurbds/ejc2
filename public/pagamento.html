@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Pagamento · Balada EJC Itarana</title>
+<meta name="theme-color" content="#150a22">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Layout: coluna única de 560px. Resumo do valor, QR do Pix em fundo branco (precisa de contraste para a câmera ler), campo com o código e botão de copiar, depois os passos. */
+:root{
+  --bg:#150a22;--panel:#221238;--line:#432a66;--text:#fff;--mute:#c9b8e0;
+  --pink:#ff4fa3;--magenta:#c02bd6;--orange:#ff8a3d;--ok:#7be0a5;--bad:#ff9a8a;
+  --display:"Bodoni Moda","Didot","Times New Roman",serif;
+  --body:"Jost","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.5;
+  background-image:radial-gradient(420px 320px at 100% -40px,rgba(255,79,163,.32),transparent 70%),radial-gradient(420px 360px at -10% 30%,rgba(192,43,214,.22),transparent 70%);background-repeat:no-repeat}
+.wrap{max-width:560px;margin-inline:auto;padding:22px 20px 48px}
+.marca{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:22px}
+.marca b{color:var(--text);font-weight:500}
+h1{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(38px,11vw,56px);line-height:.95;margin:0 0 8px;text-wrap:balance}
+.ola{color:var(--mute);margin:0 0 22px}
+.resumo{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:16px;border:1px solid var(--line);background:var(--panel);margin-bottom:22px}
+.resumo small{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.valor{font-family:var(--display);font-size:46px;line-height:1;color:var(--pink)}
+.det{font-size:15px;color:var(--mute);max-width:24ch}
+.qr{background:#fff;padding:14px;width:min(100%,320px);margin:0 auto 18px;display:block}
+.qr img{display:block;width:100%;height:auto}
+label{display:block;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-weight:500}
+.codigo{width:100%;background:#0e0617;color:var(--text);border:1px solid var(--line);padding:12px;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace;resize:none;height:92px;border-radius:0;overflow-wrap:anywhere}
+.btn{width:100%;border:0;border-radius:0;padding:17px 20px;background:var(--pink);color:#1a0a14;font:inherit;font-weight:600;font-size:17px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:12px}
+.btn:hover{background:#ff72b6}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);font-weight:500}
+.btn.ghost:hover{border-color:var(--pink);background:transparent}
+.btn[disabled]{opacity:.6;cursor:default}
+:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+.ok{color:var(--ok);min-height:1.4em;margin:8px 0 0;font-size:15px}
+ol{margin:26px 0 0;padding-left:22px;color:var(--mute)}
+ol li{margin-bottom:8px}
+ol b{color:var(--text);font-weight:500}
+.status{padding:14px 16px;border:1px solid var(--line);background:var(--panel);margin-bottom:18px;font-size:15px}
+.status.pago{border-color:var(--ok);color:var(--ok)}
+.status.pago b{display:block;font-size:18px;color:var(--text);font-weight:600}
+.erro{padding:18px;border:1px solid var(--bad)}
+footer{margin-top:30px;color:var(--mute);font-size:13px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="marca"><b>EJC Itarana</b> · <span id="evento">Balada EJC</span></div>
+
+  <div class="erro" id="erro" hidden>
+    <h1>Link inválido</h1>
+    <p style="margin:0;color:var(--mute)">Não achei esse pagamento. Abra o link que apareceu logo depois da sua inscrição, ou peça outro à equipe do EJC.</p>
+  </div>
+
+  <div id="conteudo" hidden>
+    <h1 id="titulo">Falta o pagamento</h1>
+    <p class="ola" id="ola"></p>
+
+    <div class="status pago" id="stPago" hidden>
+      <b>Pagamento confirmado</b>
+      Sua entrada está garantida. Te esperamos no evento.
+    </div>
+    <div class="status" id="stAvisou" hidden>Recebemos seu aviso. A equipe vai conferir o Pix e confirmar aqui.</div>
+
+    <div id="blocoPix">
+      <div class="resumo">
+        <div><small>Valor do Pix</small><div class="valor" id="valor">R$ 0,00</div></div>
+        <div class="det" id="det"></div>
+      </div>
+
+      <div class="qr"><img id="qr" alt="QR Code do Pix para pagamento" width="360" height="360"></div>
+
+      <label for="codigo">Pix copia e cola</label>
+      <textarea class="codigo" id="codigo" readonly></textarea>
+      <button class="btn" id="copiar" type="button">Copiar código</button>
+      <div class="ok" id="okCopia" role="status"></div>
+
+      <button class="btn ghost" id="paguei" type="button">Já fiz o pagamento</button>
+
+      <ol>
+        <li>Abra o app do seu banco e escolha <b>Pix</b>.</li>
+        <li>Leia o <b>QR Code</b> ou use <b>Pix copia e cola</b> com o código acima.</li>
+        <li>Confira o valor e o nome <b id="recebedor"></b> antes de confirmar.</li>
+        <li>Depois de pagar, toque em <b>Já fiz o pagamento</b>. A equipe confirma na lista.</li>
+      </ol>
+    </div>
+    <footer>Guarde este link. Você pode voltar aqui quando quiser para ver se o pagamento foi confirmado.</footer>
+  </div>
+</main>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var token = new URLSearchParams(location.search).get("c") || "";
+  var codigo = "";
+  var brl = function(n){ return "R$ " + n.toFixed(2).replace(".", ","); };
+
+  function mostrarErro(){ $("conteudo").hidden = true; $("erro").hidden = false; }
+
+  function aplicar(d){
+    $("evento").textContent = d.evento.nome + " · " + d.evento.dataTexto + ", " + d.evento.horario;
+    $("ola").textContent = "Olá, " + d.nome.split(" ")[0] + ". " + (d.pago ? "Está tudo certo com a sua inscrição." : "Sua vaga já está reservada. Pague o Pix abaixo para garantir a entrada.");
+    $("valor").textContent = brl(d.valor);
+    $("det").textContent = "1 ingresso, no seu nome";
+    $("recebedor").textContent = d.recebedor;
+    $("qr").src = d.qr;
+    codigo = d.brcode;
+    $("codigo").value = d.brcode;
+    $("titulo").textContent = d.pago ? "Pago, obrigado" : "Falta o pagamento";
+    $("stPago").hidden = !d.pago;
+    $("stAvisou").hidden = d.pago || !d.avisou;
+    $("blocoPix").hidden = d.pago;
+    $("paguei").disabled = d.avisou;
+    $("paguei").textContent = d.avisou ? "Aviso enviado" : "Já fiz o pagamento";
+    $("conteudo").hidden = false;
+    $("erro").hidden = true;
+  }
+
+  function carregar(){
+    if (!/^[a-f0-9]{24}$/.test(token)) return mostrarErro();
+    return fetch("/api/pagamento/" + token, {cache:"no-store"}).then(function(r){
+      if (!r.ok) throw new Error("nao achei");
+      return r.json();
+    }).then(aplicar).catch(function(){ if ($("conteudo").hidden) mostrarErro(); });
+  }
+
+  $("copiar").addEventListener("click", function(){
+    var fim = function(t){ $("okCopia").textContent = t; };
+    var manual = function(){
+      var ta = $("codigo"); ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+      fim("Selecionei o código. Use Copiar no menu do celular.");
+    };
+    try {
+      navigator.clipboard.writeText(codigo).then(function(){ fim("Código copiado. Cole no app do seu banco."); }, manual);
+    } catch (e) { manual(); }
+  });
+
+  $("paguei").addEventListener("click", function(){
+    $("paguei").disabled = true;
+    fetch("/api/pagamento/" + token + "/avisar", {method:"POST"}).then(carregar);
+  });
+
+  carregar();
+  setInterval(function(){ if (!document.hidden) carregar(); }, 20000);
+})();
+</script>
+</body>
+</html>

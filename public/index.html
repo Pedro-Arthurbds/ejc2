@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Balada EJC Itarana · Inscrição</title>
+<meta name="description" content="Inscrição para a Balada EJC Itarana. Vagas limitadas.">
+<meta name="theme-color" content="#150a22">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Layout: coluna única de 560px. Foto do post no topo, título grande em serifa, linha de data/local como no post, depois contador de vagas e formulário. */
+:root{
+  --bg:#150a22;
+  --panel:#221238;
+  --line:#432a66;
+  --text:#ffffff;
+  --mute:#c9b8e0;
+  --pink:#ff4fa3;
+  --magenta:#c02bd6;
+  --orange:#ff8a3d;
+  --bad:#ff9a8a;
+  --display:"Bodoni Moda","Didot","Times New Roman",serif;
+  --body:"Jost","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.5}
+.wrap{max-width:560px;margin-inline:auto;position:relative}
+.hero{position:relative;aspect-ratio:1080/840;background:#111 url(hero.jpg) center/cover no-repeat}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(to bottom,transparent,var(--bg) 92%)}
+.pad{padding-inline:20px}
+h1{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:clamp(54px,17vw,92px);line-height:.9;letter-spacing:-.01em;text-align:center;margin:-34px 0 22px;position:relative;z-index:1;text-wrap:balance}
+.info{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+.dia{display:flex;align-items:center;gap:8px}
+.dia b{font-family:var(--body);font-weight:500;font-size:64px;line-height:.9;letter-spacing:-.02em}
+.dia span{display:grid;font-size:22px;line-height:1.05;letter-spacing:.04em;text-transform:uppercase}
+.local{border-left:2px solid var(--text);padding-left:16px;font-size:19px;line-height:1.3;letter-spacing:.06em;text-transform:uppercase}
+.vagas{margin-top:8px;padding:16px;border:1px solid var(--line);background:var(--panel);display:grid;gap:10px}
+.vagas strong{font-size:15px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.vagas .n{font-family:var(--display);font-size:30px;line-height:1;color:var(--pink)}
+.barra{height:6px;background:#0e0617;position:relative}
+.barra i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--magenta),var(--pink),var(--orange));width:0;transition:width .5s}
+.vagas p{margin:0;color:var(--mute);font-size:14px}
+
+.grade{position:relative;margin-top:30px;padding-block:38px 56px}
+.grade::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:linear-gradient(var(--magenta) 1px,transparent 1px),linear-gradient(90deg,var(--magenta) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 70%);mask-image:linear-gradient(to bottom,transparent,#000 70%)}
+.grade>*{position:relative}
+h2{font-family:var(--display);font-weight:500;text-transform:uppercase;font-size:34px;line-height:1;margin:0 0 6px}
+.sub{color:var(--mute);margin:0 0 24px;font-size:16px}
+form{display:grid;gap:18px;background:rgba(21,10,34,.92);padding:20px;border:1px solid var(--line)}
+.f{display:grid;gap:6px;min-width:0}
+label,legend{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:500}
+input[type=text],input[type=tel],input[type=number],select{width:100%;background:#0e0617;color:var(--text);border:1px solid var(--line);border-radius:0;padding:13px 12px;font:inherit;font-size:17px}
+input::placeholder{color:#8b78a8}
+:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:430px){.row{grid-template-columns:1fr}}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px;min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+.chip span{display:block;padding:11px 15px;border:1px solid var(--line);background:#0e0617;font-size:16px}
+.chip input:checked+span{background:var(--pink);border-color:var(--pink);color:#1a0a14;font-weight:600}
+.chip input:focus-visible+span{outline:2px solid var(--text);outline-offset:2px}
+.err{color:var(--bad);font-size:14px;min-height:1.2em}
+.msg{padding:12px 14px;border:1px solid var(--bad);color:var(--text);font-size:15px}
+.btn{width:100%;border:0;border-radius:0;padding:17px 20px;background:var(--pink);color:#1a0a14;font:inherit;font-weight:600;font-size:17px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.btn:hover{background:#ff72b6}
+.btn[disabled]{opacity:.6;cursor:wait}
+.ok{padding:26px 20px;border:1px solid var(--pink);background:rgba(21,10,34,.95);display:grid;gap:10px;text-align:left}
+.ok h2{color:var(--pink)}
+.ok p{margin:0}
+.fim{padding:26px 20px;border:1px solid var(--line);background:rgba(21,10,34,.95)}
+footer{padding:0 20px 36px;color:var(--mute);font-size:13px}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+@media (prefers-reduced-motion:reduce){.barra i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero" role="img" aria-label="Show de luzes em uma balada. EJC Itarana."></div>
+  <div class="pad">
+    <h1 id="titulo">Balada EJC</h1>
+    <div class="info">
+      <div class="dia"><b id="dia">24</b><span><span id="mes">OUT</span><span id="hora">19H30</span></span></div>
+      <div class="local" id="local">Salão Paroquial<br>Itarana</div>
+    </div>
+
+    <div class="vagas" aria-live="polite">
+      <strong>Vagas limitadas</strong>
+      <div class="n" id="restantes">&nbsp;</div>
+      <div class="barra" aria-hidden="true"><i id="barra"></i></div>
+      <p id="vagasTxt">Carregando…</p>
+    </div>
+  </div>
+
+  <section class="grade pad" aria-labelledby="tForm">
+    <div id="areaForm">
+      <h2 id="tForm">Garanta seu lugar</h2>
+      <p class="sub">Preencha os dados e confirme. Leva menos de um minuto.</p>
+      <form id="form" novalidate>
+        <div class="f">
+          <label for="nome">Nome completo</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Maria da Silva" maxlength="80" required>
+          <div class="err" id="e-nome"></div>
+        </div>
+        <div class="row">
+          <div class="f">
+            <label for="idade">Idade</label>
+            <input id="idade" name="idade" type="number" inputmode="numeric" min="12" max="99" placeholder="19" required>
+            <div class="err" id="e-idade"></div>
+          </div>
+          <div class="f">
+            <label for="whatsapp">Seu WhatsApp</label>
+            <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(27) 9 0000-0000" required>
+            <div class="err" id="e-whatsapp"></div>
+          </div>
+        </div>
+        <fieldset>
+          <legend>Você já fez o EJC?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="ejc" value="Já fiz o EJC" checked><span>Já fiz</span></label>
+            <label class="chip"><input type="radio" name="ejc" value="Ainda não fiz o EJC"><span>Ainda não</span></label>
+            <label class="chip"><input type="radio" name="ejc" value="Sou convidado(a)"><span>Sou convidado(a)</span></label>
+          </div>
+          <div class="err" id="e-ejc"></div>
+        </fieldset>
+        <div class="hp" aria-hidden="true"><label>Não preencha <input id="site" name="site" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <div class="msg" id="geral" role="alert" hidden></div>
+        <button class="btn" id="enviar" type="submit">Confirmar inscrição</button>
+      </form>
+    </div>
+
+    <div class="ok" id="sucesso" role="status" hidden>
+      <h2>Inscrição confirmada</h2>
+      <p id="sucessoTxt"></p>
+      <p style="color:var(--mute);font-size:15px">Guarde esta tela. Se precisar mudar algo, fale com a equipe do EJC.</p>
+    </div>
+
+    <div class="fim" id="esgotado" role="status" hidden>
+      <h2>Vagas esgotadas</h2>
+      <p style="margin:0;color:var(--mute)">As inscrições para a Balada EJC foram encerradas. Fale com a equipe do EJC para entrar na lista de espera.</p>
+    </div>
+  </section>
+
+  <footer>Seus dados são usados só pela organização do evento, para controle de entrada e contato.</footer>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var evento = null;
+
+  function setTxt(id, t){ $(id).textContent = t; }
+
+  function aplicarEvento(e){
+    evento = e;
+    var partes = e.dataTexto.split(" de ");
+    setTxt("dia", partes[0]);
+    setTxt("mes", (partes[1] || "").slice(0,3).toUpperCase());
+    setTxt("hora", e.horario.toUpperCase());
+    $("local").textContent = "";
+    $("local").appendChild(document.createTextNode(e.local));
+    $("local").appendChild(document.createElement("br"));
+    $("local").appendChild(document.createTextNode(e.cidade));
+    setTxt("titulo", e.nome);
+
+    // Sem números: a barra mostra só o quanto já encheu, e a frase muda conforme a lotação real.
+    $("barra").style.width = (e.esgotado ? 100 : Math.max(e.lotacao, 4)) + "%";
+    var frase = e.esgotado ? "Esgotado"
+      : e.lotacao >= 90 ? "Últimas vagas"
+      : e.lotacao >= 60 ? "As vagas estão acabando"
+      : "Garanta a sua antes que acabe";
+    setTxt("restantes", frase);
+    setTxt("vagasTxt", e.esgotado ? "Todas as vagas foram preenchidas." : "Cada pessoa precisa se inscrever. Quando a barra encher, fecha.");
+
+    if (e.esgotado && $("sucesso").hidden) {
+      $("areaForm").hidden = true;
+      $("esgotado").hidden = false;
+    }
+  }
+
+  function carregar(){
+    return fetch("/api/evento", {cache:"no-store"}).then(function(r){ return r.json(); }).then(aplicarEvento).catch(function(){
+      setTxt("vagasTxt", "Não consegui atualizar agora. Você ainda pode se inscrever.");
+    });
+  }
+
+  function mascara(v){
+    var d = v.replace(/\D/g, "").slice(0, 11);
+    if (d.length > 10) return "(" + d.slice(0,2) + ") " + d[2] + " " + d.slice(3,7) + "-" + d.slice(7);
+    if (d.length > 6)  return "(" + d.slice(0,2) + ") " + d.slice(2,6) + "-" + d.slice(6);
+    if (d.length > 2)  return "(" + d.slice(0,2) + ") " + d.slice(2);
+    return d;
+  }
+  $("whatsapp").addEventListener("input", function(e){ e.target.value = mascara(e.target.value); });
+
+  function limparErros(){
+    ["nome","idade","whatsapp","ejc"].forEach(function(c){ setTxt("e-" + c, ""); });
+    $("geral").hidden = true;
+  }
+  function mostrarErros(campos, geral){
+    Object.keys(campos || {}).forEach(function(c){ if ($("e-" + c)) setTxt("e-" + c, campos[c]); });
+    if (geral) { setTxt("geral", geral); $("geral").hidden = false; }
+  }
+
+  $("form").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    limparErros();
+    var f = ev.target;
+    var corpo = {
+      nome: f.nome.value, idade: f.idade.value, whatsapp: f.whatsapp.value,
+      ejc: f.ejc.value, site: f.site.value
+    };
+    var erros = {};
+    if (corpo.nome.trim().split(/\s+/).length < 2) erros.nome = "Escreva nome e sobrenome.";
+    var idade = parseInt(corpo.idade, 10);
+    if (!(idade >= 12 && idade <= 99)) erros.idade = "Informe uma idade válida.";
+    var dg = corpo.whatsapp.replace(/\D/g, "");
+    if (dg.length < 10 || dg.length > 11) erros.whatsapp = "Use DDD e número.";
+    if (Object.keys(erros).length) { mostrarErros(erros); var p = document.querySelector(".err:not(:empty)"); if (p) p.scrollIntoView({block:"center",behavior:"smooth"}); return; }
+
+    var btn = $("enviar");
+    btn.disabled = true; btn.textContent = "Enviando…";
+    fetch("/api/inscricoes", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(corpo)
+    }).then(function(r){ return r.json().then(function(j){ return {ok: r.ok, j: j}; }); })
+    .then(function(res){
+      if (res.ok) {
+        if (res.j.pagamento && res.j.token) {
+          // Com Pix ligado, leva direto para a página de pagamento.
+          location.href = "/pagamento.html?c=" + encodeURIComponent(res.j.token);
+          return;
+        }
+        setTxt("sucessoTxt", "Seu nome está na lista. Te esperamos dia " + (evento ? evento.dataTexto + " às " + evento.horario + ", no " + evento.local + " de " + evento.cidade : "no evento") + ".");
+        $("areaForm").hidden = true;
+        $("sucesso").hidden = false;
+        $("sucesso").scrollIntoView({block:"center",behavior:"smooth"});
+        carregar();
+      } else {
+        mostrarErros(res.j.campos, res.j.erro);
+        carregar();
+      }
+    }).catch(function(){
+      mostrarErros({}, "Sem conexão. Verifique a internet e tente de novo.");
+    }).then(function(){
+      btn.disabled = false; btn.textContent = "Confirmar inscrição";
+    });
+  });
+
+  carregar();
+  setInterval(function(){ if (!document.hidden) carregar(); }, 60000);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1498 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+
+<title>Painel · Balada EJC</title>
+
+<style>
+
+:root{
+  --bg:#150a22;
+  --panel:#221238;
+  --line:#432a66;
+  --text:#fff;
+  --mute:#c9b8e0;
+  --pink:#ff4fa3;
+  --bad:#ff9a8a;
+  color-scheme:dark
+}
+
+*{box-sizing:border-box}
+
+[hidden]{display:none!important}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,"Segoe UI",sans-serif;
+  font-size:15px;
+  line-height:1.45;
+  padding:20px 16px 60px
+}
+
+main{
+  max-width:1100px;
+  margin-inline:auto
+}
+
+header{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px
+}
+
+h1{
+  margin:0;
+  font-size:22px;
+  font-weight:600
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:10px;
+  margin-bottom:18px
+}
+
+.stat{
+  background:var(--panel);
+  border:1px solid var(--line);
+  padding:12px 14px
+}
+
+.stat b{
+  display:block;
+  font-size:26px;
+  line-height:1.1
+}
+
+.stat span{
+  color:var(--mute);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.1em
+}
+
+.tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:12px
+}
+
+input[type=search]{
+  flex:1 1 220px;
+  min-width:0;
+  background:#0e0617;
+  color:var(--text);
+  border:1px solid var(--line);
+  padding:10px 12px;
+  font:inherit
+}
+
+.btn{
+  background:var(--pink);
+  color:#1a0a14;
+  border:0;
+  padding:10px 14px;
+  font:inherit;
+  font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-block
+}
+
+.btn.ghost{
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--line);
+  font-weight:500
+}
+
+.btn.sm{
+  padding:6px 10px;
+  font-size:13px
+}
+
+.btn:disabled{
+  opacity:.6;
+  cursor:wait
+}
+
+:focus-visible{
+  outline:2px solid var(--pink);
+  outline-offset:2px
+}
+
+.tabela{
+  overflow-x:auto;
+  border:1px solid var(--line)
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:820px
+}
+
+th,td{
+  padding:10px 12px;
+  text-align:left;
+  border-bottom:1px solid var(--line);
+  vertical-align:middle
+}
+
+th{
+  background:var(--panel);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--mute);
+  position:sticky;
+  top:0
+}
+
+tr.pres td{
+  background:rgba(255,79,163,.08)
+}
+
+td.num,
+th.num{
+  text-align:center;
+  white-space:nowrap
+}
+
+a{
+  color:#ffd0e6
+}
+
+.vazio{
+  padding:28px;
+  text-align:center;
+  color:var(--mute)
+}
+
+.aviso{
+  color:var(--bad);
+  margin:8px 0
+}
+
+input[type=checkbox]{
+  width:20px;
+  height:20px;
+  accent-color:#ff4fa3
+}
+
+.pill{
+  display:inline-block;
+  padding:3px 9px;
+  font-size:12px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  border:1px solid var(--line);
+  white-space:nowrap
+}
+
+.pill.pago{
+  background:rgba(123,224,165,.14);
+  border-color:#7be0a5;
+  color:#7be0a5
+}
+
+.pill.avisou{
+  background:rgba(255,138,61,.14);
+  border-color:#ff8a3d;
+  color:#ffb27a
+}
+
+.pill.pend{
+  color:var(--mute)
+}
+
+select{
+  background:#0e0617;
+  color:var(--text);
+  border:1px solid var(--line);
+  padding:10px 12px;
+  font:inherit
+}
+
+.barraadm{
+  background:var(--panel);
+  border:1px solid var(--line);
+  padding:14px 16px;
+  margin-bottom:18px;
+  display:grid;
+  gap:12px
+}
+
+.barraadm h2{
+  margin:0;
+  font-size:16px;
+  font-weight:600
+}
+
+.barraadm .linha{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  align-items:center
+}
+
+.barraadm label{
+  display:flex;
+  gap:6px;
+  align-items:center;
+  cursor:pointer
+}
+
+.barraadm input[type=range]{
+  flex:1 1 220px;
+  min-width:0;
+  accent-color:#ff4fa3
+}
+
+.prev{
+  height:8px;
+  background:#0e0617;
+  position:relative
+}
+
+.prev i{
+  position:absolute;
+  inset:0 auto 0 0;
+  background:linear-gradient(
+    90deg,
+    #c02bd6,
+    #ff4fa3,
+    #ff8a3d
+  );
+  width:0
+}
+
+.dica{
+  color:var(--mute);
+  font-size:13px;
+  margin:0
+}
+
+.acoes{
+  display:flex;
+  gap:6px;
+  justify-content:flex-end;
+  flex-wrap:wrap
+}
+
+</style>
+
+</head>
+
+<body>
+
+<main>
+
+  <header>
+
+    <h1>Painel · Balada EJC Itarana</h1>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+
+      <button
+        class="btn ghost"
+        id="atualizar"
+        type="button"
+      >
+        Atualizar
+      </button>
+
+      <!-- NOVO -->
+      <button
+        class="btn"
+        id="sincronizarPlanilha"
+        type="button"
+      >
+        Atualizar pelo Google Sheets
+      </button>
+
+      <a
+        class="btn"
+        href="/api/admin/inscricoes.csv"
+      >
+        Baixar planilha (CSV)
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <section class="stats" aria-label="Resumo">
+
+    <div class="stat">
+      <b id="sInscritos">0</b>
+      <span>Inscritos</span>
+    </div>
+
+    <div class="stat">
+      <b id="sRestam">0</b>
+      <span>Vagas restantes</span>
+    </div>
+
+    <div class="stat">
+      <b id="sPresentes">0</b>
+      <span>Chegaram</span>
+    </div>
+
+    <div class="stat pgto">
+      <b id="sPagos">0</b>
+      <span>Pagaram</span>
+    </div>
+
+    <div class="stat pgto">
+      <b id="sRecebido">R$ 0</b>
+      <span id="sFalta">A receber</span>
+    </div>
+
+  </section>
+
+
+  <section
+    class="barraadm"
+    aria-labelledby="tBarra"
+  >
+
+    <h2 id="tBarra">
+      Barra de vagas da página pública
+    </h2>
+
+    <div class="linha">
+
+      <label>
+        <input
+          type="radio"
+          name="modoBarra"
+          value="auto"
+          checked
+        >
+        Automática
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="modoBarra"
+          value="manual"
+        >
+        Manual
+      </label>
+
+      <input
+        type="range"
+        id="valBarra"
+        min="0"
+        max="95"
+        step="5"
+        value="50"
+        aria-label="Quanto da barra fica cheia"
+      >
+
+      <b
+        id="txtBarra"
+        style="min-width:3.5em"
+      >
+        50%
+      </b>
+
+      <button
+        class="btn"
+        id="salvarBarra"
+        type="button"
+      >
+        Salvar
+      </button>
+
+    </div>
+
+    <div
+      class="prev"
+      aria-hidden="true"
+    >
+      <i id="prevBarra"></i>
+    </div>
+
+    <p
+      class="dica"
+      id="fraseBarra"
+    ></p>
+
+    <p class="dica">
+      Automática: acompanha as inscrições reais,
+      de 10 em 10%. Manual: você escolhe até 95%.
+      Isso muda só o que aparece na página.
+      O limite real de vagas continua valendo,
+      e quando acabarem a página mostra
+      "Esgotado" sozinha.
+    </p>
+
+    <div
+      class="ok"
+      id="okBarra"
+      role="status"
+      style="color:#7be0a5;min-height:1.2em"
+    ></div>
+
+  </section>
+
+
+  <div class="tools">
+
+    <input
+      type="search"
+      id="busca"
+      placeholder="Buscar por nome ou WhatsApp"
+      aria-label="Buscar inscritos"
+    >
+
+    <select
+      id="filtro"
+      aria-label="Filtrar por pagamento"
+    >
+
+      <option value="">
+        Todos
+      </option>
+
+      <option value="pendente">
+        Não pagaram
+      </option>
+
+      <option value="pago">
+        Pagaram
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div
+    class="aviso"
+    id="aviso"
+    role="alert"
+    hidden
+  ></div>
+
+
+  <div class="tabela">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Nome</th>
+
+          <th class="num">
+            Idade
+          </th>
+
+          <th>
+            WhatsApp
+          </th>
+
+          <th>
+            EJC
+          </th>
+
+          <th class="num pgto">
+            Valor
+          </th>
+
+          <th class="pgto">
+            Pagamento
+          </th>
+
+          <th class="num">
+            Chegou
+          </th>
+
+          <th></th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="corpo"></tbody>
+
+    </table>
+
+    <div
+      class="vazio"
+      id="vazio"
+      hidden
+    >
+      Nenhuma inscrição ainda.
+    </div>
+
+  </div>
+
+</main>
+
+
+<script>
+
+(function(){
+
+  var $ = function(id){
+    return document.getElementById(id);
+  };
+
+
+  var dados = [];
+  var vagas = 0;
+  var apagar = null;
+
+
+  function aviso(t){
+
+    $("aviso").textContent = t || "";
+    $("aviso").hidden = !t;
+
+  }
+
+
+  function api(url, opts){
+
+    return fetch(url, opts).then(function(r){
+
+      if (!r.ok) {
+        throw new Error("erro " + r.status);
+      }
+
+      return r.json();
+
+    });
+
+  }
+
+
+  function celula(tr, txt, cls){
+
+    var td = document.createElement("td");
+
+    if (cls) {
+      td.className = cls;
+    }
+
+    td.textContent = txt;
+
+    tr.appendChild(td);
+
+    return td;
+
+  }
+
+
+  var temPix = false;
+
+
+  function brl(n){
+
+    return "R$ " +
+      Number(n).toFixed(2).replace(".", ",");
+
+  }
+
+
+  function pill(txt, cls){
+
+    var sp = document.createElement("span");
+
+    sp.className = "pill " + cls;
+
+    sp.textContent = txt;
+
+    return sp;
+
+  }
+
+
+  function botao(txt, fn){
+
+    var b = document.createElement("button");
+
+    b.type = "button";
+
+    b.className = "btn ghost sm";
+
+    b.textContent = txt;
+
+    b.addEventListener("click", fn);
+
+    return b;
+
+  }
+
+
+  function render(){
+
+    var termo =
+      $("busca").value
+        .trim()
+        .toLowerCase();
+
+    var filtro =
+      temPix
+        ? $("filtro").value
+        : "";
+
+
+    var lista = dados.filter(function(r){
+
+      if (
+        filtro === "pago" &&
+        !r.pago
+      ) {
+        return false;
+      }
+
+      if (
+        filtro === "pendente" &&
+        r.pago
+      ) {
+        return false;
+      }
+
+      return (
+        !termo ||
+        (
+          r.nome +
+          " " +
+          r.whatsapp
+        )
+        .toLowerCase()
+        .indexOf(termo) !== -1
+      );
+
+    });
+
+
+    var corpo = $("corpo");
+
+    corpo.textContent = "";
+
+
+    lista.forEach(function(r){
+
+      var tr =
+        document.createElement("tr");
+
+
+      if (r.presente) {
+        tr.className = "pres";
+      }
+
+
+      celula(
+        tr,
+        r.nome
+      );
+
+
+      celula(
+        tr,
+        r.idade,
+        "num"
+      );
+
+
+      var tdz =
+        document.createElement("td");
+
+
+      var a =
+        document.createElement("a");
+
+
+      a.href =
+        "https://wa.me/55" +
+        r.whatsapp;
+
+      a.target = "_blank";
+
+      a.rel = "noopener";
+
+      a.textContent =
+        r.whatsapp;
+
+
+      tdz.appendChild(a);
+
+      tr.appendChild(tdz);
+
+
+      celula(
+        tr,
+        r.ejc
+      );
+
+
+      if (temPix) {
+
+        celula(
+          tr,
+          brl(r.valor),
+          "num"
+        );
+
+
+        var tdp =
+          document.createElement("td");
+
+
+        var box =
+          document.createElement("div");
+
+
+        box.style.cssText =
+          "display:flex;" +
+          "gap:8px;" +
+          "align-items:center;" +
+          "flex-wrap:wrap";
+
+
+        box.appendChild(
+
+          r.pago
+
+            ? pill(
+                "Pago",
+                "pago"
+              )
+
+            : (
+                r.avisou_pagamento
+
+                  ? pill(
+                      "Avisou que pagou",
+                      "avisou"
+                    )
+
+                  : pill(
+                      "Não pagou",
+                      "pend"
+                    )
+              )
+
+        );
+
+
+        box.appendChild(
+
+          botao(
+
+            r.pago
+              ? "Desfazer"
+              : "Marcar como pago",
+
+            function(){
+
+              api(
+                "/api/admin/inscricoes/" +
+                r.id +
+                "/pago",
+
+                {
+                  method:"PATCH",
+
+                  headers:{
+                    "Content-Type":
+                      "application/json"
+                  },
+
+                  body:JSON.stringify({
+                    pago: !r.pago
+                  })
+                }
+
+              )
+
+              .then(carregar)
+
+              .catch(function(){
+
+                aviso(
+                  "Não consegui salvar o pagamento."
+                );
+
+              });
+
+            }
+
+          )
+
+        );
+
+
+        tdp.appendChild(box);
+
+        tr.appendChild(tdp);
+
+      }
+
+
+      var tdc =
+        document.createElement("td");
+
+      tdc.className = "num";
+
+
+      var cb =
+        document.createElement("input");
+
+      cb.type = "checkbox";
+
+      cb.checked =
+        !!r.presente;
+
+
+      cb.setAttribute(
+        "aria-label",
+        "Marcar que " +
+        r.nome +
+        " chegou"
+      );
+
+
+      cb.addEventListener(
+        "change",
+        function(){
+
+          api(
+            "/api/admin/inscricoes/" +
+            r.id +
+            "/presente",
+
+            {
+              method:"PATCH",
+
+              headers:{
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:JSON.stringify({
+                presente: cb.checked
+              })
+            }
+
+          )
+
+          .then(carregar)
+
+          .catch(function(){
+
+            aviso(
+              "Não consegui salvar a presença."
+            );
+
+            cb.checked =
+              !cb.checked;
+
+          });
+
+        }
+      );
+
+
+      tdc.appendChild(cb);
+
+      tr.appendChild(tdc);
+
+
+      var tdx =
+        document.createElement("td");
+
+
+      var ac =
+        document.createElement("div");
+
+
+      ac.className = "acoes";
+
+
+      if (temPix) {
+
+        var bl =
+          botao(
+            "Copiar link de pagamento",
+            function(){
+
+              var link =
+                location.origin +
+                "/pagamento.html?c=" +
+                r.token;
+
+
+              var ok =
+                function(){
+
+                  bl.textContent =
+                    "Link copiado";
+
+
+                  setTimeout(
+                    function(){
+
+                      bl.textContent =
+                        "Copiar link de pagamento";
+
+                    },
+                    2000
+                  );
+
+                };
+
+
+              try {
+
+                navigator
+                  .clipboard
+                  .writeText(link)
+                  .then(
+                    ok,
+                    function(){
+
+                      aviso(
+                        "Copie o link: " +
+                        link
+                      );
+
+                    }
+                  );
+
+              } catch(e) {
+
+                aviso(
+                  "Copie o link: " +
+                  link
+                );
+
+              }
+
+            }
+          );
+
+
+        ac.appendChild(bl);
+
+      }
+
+
+      var b =
+        botao(
+
+          apagar === r.id
+            ? "Confirmar exclusão"
+            : "Excluir",
+
+          function(){
+
+            if (
+              apagar !== r.id
+            ) {
+
+              apagar = r.id;
+
+              render();
+
+              return;
+
+            }
+
+
+            api(
+              "/api/admin/inscricoes/" +
+              r.id,
+
+              {
+                method:"DELETE"
+              }
+
+            )
+
+            .then(function(){
+
+              apagar = null;
+
+              carregar();
+
+            })
+
+            .catch(function(){
+
+              aviso(
+                "Não consegui excluir."
+              );
+
+            });
+
+          }
+
+        );
+
+
+      ac.appendChild(b);
+
+      tdx.appendChild(ac);
+
+      tr.appendChild(tdx);
+
+      corpo.appendChild(tr);
+
+    });
+
+
+    $("vazio").hidden =
+      lista.length > 0;
+
+
+    $("vazio").textContent =
+      dados.length
+        ? "Ninguém encontrado nessa busca."
+        : "Nenhuma inscrição ainda.";
+
+  }
+
+
+  function carregar(){
+
+    return api(
+      "/api/admin/inscricoes"
+    )
+
+    .then(function(j){
+
+      dados = j.lista;
+
+      vagas = j.vagas;
+
+      temPix = !!j.pagamento;
+
+
+      document
+        .querySelectorAll(".pgto")
+        .forEach(function(el){
+
+          el.hidden = !temPix;
+
+        });
+
+
+      $("filtro").hidden =
+        !temPix;
+
+
+      $("sInscritos").textContent =
+        dados.length;
+
+
+      $("sRestam").textContent =
+        Math.max(
+          0,
+          vagas - j.total
+        );
+
+
+      $("sPresentes").textContent =
+        dados.filter(function(r){
+          return r.presente;
+        }).length;
+
+
+      if (temPix) {
+
+        var pagos =
+          dados.filter(function(r){
+            return r.pago;
+          });
+
+
+        $("sPagos").textContent =
+          pagos.length +
+          " de " +
+          dados.length;
+
+
+        var recebido =
+          pagos.reduce(
+            function(s, r){
+              return s + r.valor;
+            },
+            0
+          );
+
+
+        var total =
+          dados.reduce(
+            function(s, r){
+              return s + r.valor;
+            },
+            0
+          );
+
+
+        $("sRecebido").textContent =
+          brl(recebido);
+
+
+        $("sFalta").textContent =
+          "Recebido · falta " +
+          brl(total - recebido);
+
+      }
+
+
+      aviso("");
+
+      render();
+
+    })
+
+    .catch(function(){
+
+      aviso(
+        "Não consegui carregar a lista. Atualize a página."
+      );
+
+    });
+
+  }
+
+
+  $("filtro")
+    .addEventListener(
+      "change",
+      render
+    );
+
+
+  /* =====================================================
+     BARRA DE VAGAS
+     ===================================================== */
+
+  var autoAtual = 0;
+
+
+  function fraseDe(p){
+
+    return p >= 90
+      ? "Na página: “Últimas vagas”"
+      : p >= 60
+        ? "Na página: “As vagas estão acabando”"
+        : "Na página: “Garanta a sua antes que acabe”";
+
+  }
+
+
+  function modoBarra(){
+
+    return document
+      .querySelector(
+        "input[name=modoBarra]:checked"
+      )
+      .value;
+
+  }
+
+
+  function atualizarBarra(){
+
+    var manual =
+      modoBarra() === "manual";
+
+
+    $("valBarra").disabled =
+      !manual;
+
+
+    var p =
+      manual
+        ? parseInt(
+            $("valBarra").value,
+            10
+          )
+        : autoAtual;
+
+
+    $("txtBarra").textContent =
+      p + "%";
+
+
+    $("prevBarra").style.width =
+      Math.max(p, 4) + "%";
+
+
+    $("fraseBarra").textContent =
+      fraseDe(p) +
+      (
+        manual
+          ? ""
+          : " (automática agora: " +
+            autoAtual +
+            "%)"
+      );
+
+  }
+
+
+  function carregarBarra(){
+
+    return api(
+      "/api/admin/barra"
+    )
+
+    .then(function(j){
+
+      autoAtual = j.auto;
+
+
+      if (
+        j.manual !== null
+      ) {
+
+        document
+          .querySelector(
+            "input[name=modoBarra][value=manual]"
+          )
+          .checked = true;
+
+
+        $("valBarra").value =
+          j.manual;
+
+      } else {
+
+        document
+          .querySelector(
+            "input[name=modoBarra][value=auto]"
+          )
+          .checked = true;
+
+      }
+
+
+      atualizarBarra();
+
+    })
+
+    .catch(function(){
+
+      $("fraseBarra").textContent =
+        "Não consegui ler a barra.";
+
+    });
+
+  }
+
+
+  document
+    .querySelectorAll(
+      "input[name=modoBarra]"
+    )
+    .forEach(function(r){
+
+      r.addEventListener(
+        "change",
+        atualizarBarra
+      );
+
+    });
+
+
+  $("valBarra")
+    .addEventListener(
+      "input",
+      atualizarBarra
+    );
+
+
+  $("salvarBarra")
+    .addEventListener(
+      "click",
+      function(){
+
+        var corpo =
+          modoBarra() === "manual"
+
+            ? {
+                modo:"manual",
+                valor:parseInt(
+                  $("valBarra").value,
+                  10
+                )
+              }
+
+            : {
+                modo:"auto"
+              };
+
+
+        api(
+          "/api/admin/barra",
+          {
+            method:"PUT",
+
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
+
+            body:JSON.stringify(corpo)
+          }
+        )
+
+        .then(function(j){
+
+          autoAtual = j.auto;
+
+          atualizarBarra();
+
+
+          $("okBarra").textContent =
+            "Salvo. A página pública já usa essa barra.";
+
+
+          setTimeout(
+            function(){
+
+              $("okBarra").textContent =
+                "";
+
+            },
+            3000
+          );
+
+        })
+
+        .catch(function(){
+
+          aviso(
+            "Não consegui salvar a barra."
+          );
+
+        });
+
+      }
+    );
+
+
+  carregarBarra();
+
+
+  $("busca")
+    .addEventListener(
+      "input",
+      render
+    );
+
+
+  $("atualizar")
+    .addEventListener(
+      "click",
+      carregar
+    );
+
+
+  /* =====================================================
+     GOOGLE SHEETS → SISTEMA
+     ===================================================== */
+
+  $("sincronizarPlanilha")
+    .addEventListener(
+      "click",
+      function(){
+
+        var botao =
+          $("sincronizarPlanilha");
+
+
+        botao.disabled = true;
+
+        botao.textContent =
+          "Atualizando...";
+
+
+        aviso("");
+
+
+        api(
+          "/api/admin/sincronizar-planilha",
+          {
+            method:"POST"
+          }
+        )
+
+        .then(function(j){
+
+          aviso(
+            "Google Sheets sincronizado. " +
+            j.atualizados +
+            " registro(s) atualizado(s)." +
+            (
+              j.ignorados
+                ? " " +
+                  j.ignorados +
+                  " ignorado(s)."
+                : ""
+            )
+          );
+
+
+          return carregar();
+
+        })
+
+        .catch(function(e){
+
+          console.error(e);
+
+          aviso(
+            "Não foi possível atualizar pelo Google Sheets."
+          );
+
+        })
+
+        .finally(function(){
+
+          botao.disabled = false;
+
+          botao.textContent =
+            "Atualizar pelo Google Sheets";
+
+        });
+
+      }
+    );
+
+
+  carregar();
+
+})();
+
+</script>
+
+</body>
+
+</html>

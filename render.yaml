@@ -1,0 +1,41 @@
+# Configuração do Render (Blueprint) 100% gratuita: site + banco Postgres grátis.
+# Limites do plano grátis: o site "dorme" após 15 min sem acesso (leva cerca de 1 min para acordar)
+# e o banco grátis expira 30 dias depois de criado. Veja o README.
+databases:
+  - name: balada-db
+    plan: free
+    databaseName: balada
+    user: balada
+
+services:
+  - type: web
+    name: balada-ejc
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: balada-db
+          property: connectionString
+      - key: VAGAS
+        value: "120"
+      # Os valores abaixo o Render pede para você preencher na criação (não ficam no GitHub).
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: PIX_CHAVE
+        sync: false
+      - key: PIX_RECEBEDOR
+        value: EJC Itarana
+      - key: PIX_CIDADE
+        value: Itarana
+      - key: VALOR_POR_PESSOA
+        sync: false
+      - key: SHEETS_WEBHOOK_URL
+        sync: false
+      - key: SHEETS_SECRET
+        sync: false

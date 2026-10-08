@@ -1,0 +1,20 @@
+{
+  "name": "balada-ejc",
+  "version": "1.0.0",
+  "description": "Inscrição da Balada EJC Itarana",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "private": true,
+  "dependencies": {
+    "better-sqlite3": "^12.11.1",
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "pg": "^8.23.1",
+    "qrcode": "^1.5.4"
+  }
+}
