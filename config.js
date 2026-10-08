@@ -3,7 +3,7 @@ module.exports = {
   nome: "Balada EJC",
   grupo: "EJC Itarana",
   dataTexto: "24 de outubro",
-  horario: "19h30",
+  horario: "19h",
   local: "Salão Paroquial",
   cidade: "Itarana",
   // Total de vagas (uma por inscrito). Pode mudar com a variável VAGAS.
