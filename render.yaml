@@ -30,4 +30,4 @@ services:
       - key: SHEETS_WEBHOOK_URL
         sync: false
       - key: SHEETS_SECRET
-        sync: false
+        sync: falsegit 
